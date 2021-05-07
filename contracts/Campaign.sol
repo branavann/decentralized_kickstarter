@@ -7,11 +7,13 @@ contract Campaign {
         uint value;
         address recipient;
         bool complete;
+        uint approvalCount;
+        mapping(address => bool) public approvals;
     }
 
     address public manager;
     uint public minimumContribution;
-    address[] public approvers;
+    mapping(address => bool) public approvers;
     Request[] public requests;
 
     modifier onlyManager() {
@@ -26,16 +28,33 @@ contract Campaign {
 
     function contribute() public payable {
         require(msg.value > minimumContribution);
-        approvers.push(msg.sender);
+        approvers[msg.sender] = true;
     }
 
     function createRequest(string description, uint value, address recipient) public onlyManager {
-        Request newRequest = Request({
+        // Local variable hence we'll use the memory keyword 
+        Request memory newRequest = Request({
             description: description,
             value: value,
             recipient: recipient,
-            complete: bool
+            complete: bool,
+            approvalCount: 0
         });
         requests.push(newRequest);
+    }
+
+    function approveRequest(uint index) public {
+
+        // Storage variable because we want to update the struct and store any changes 
+        const storage request = requests[index];
+
+        // Ensures the user has contributed to the campaign
+        require(approvers[msg.sender]);
+        // Ensures the user hasn't voted on this particular request already
+        require(!request.approvals[msg.sender]);
+
+        // Updating our request struct with the user's information 
+        request.approvals[msg.sender] = true;
+        request.approvalCount++;
     }
 }
