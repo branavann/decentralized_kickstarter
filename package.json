@@ -1,0 +1,28 @@
+{
+  "name": "decentralized_kickstarter",
+  "version": "1.0.0",
+  "description": "Creating a decentralized approach to KickStarter project funding.",
+  "main": "index.js",
+  "dependencies": {
+    "@openzeppelin/contracts": "^4.1.0",
+    "fs-extra": "^10.0.0",
+    "ganache-cli": "^6.12.2",
+    "solc": "^0.6.6"
+  },
+  "devDependencies": {
+    "mocha": "^8.4.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/branavann/decentralized_kickstarter.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/branavann/decentralized_kickstarter/issues"
+  },
+  "homepage": "https://github.com/branavann/decentralized_kickstarter#readme"
+}
