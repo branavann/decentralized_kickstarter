@@ -100,7 +100,6 @@ describe('Campaigns', () => {
 
         // Assertion 
         assert(finalBalance - initialBalance > 4.5);
-        console.log(finalBalance - initialBalance);
     });
 
 })
