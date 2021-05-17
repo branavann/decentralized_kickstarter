@@ -1,12 +1,14 @@
 import React from 'react';
+import Header from './Header';
+import { Container } from 'semantic-ui-react';
+import 'semantic-ui-css/semantic.min.css';
 
 const Layout = (props) => {
     return (
-        <div>
-            <h1>I'm a header</h1>
+        <Container>
+            <Header />
             {props.children}
-            <h1>I'm a footer</h1>
-        </div>
+        </Container>
     )
 };
 
