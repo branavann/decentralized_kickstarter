@@ -3,24 +3,28 @@ import Layout from '../../components/Layout';
 import { Button, Form, Input, Message } from 'semantic-ui-react';
 import factory from '../../ethereum/factory';
 import web3 from '../../ethereum/web3';
+import { Router } from '../../routes';
 
 class CampaignNew extends Component {
 
     state = {
         minimumContribution: '',
-        errorMessage: ''
+        errorMessage: '',
+        loading: false
     };
 
     onSubmit = async (event) => {
         event.preventDefault();
-
+        this.setState({ loading: true, errorMessage: '' });
         try {
             const accounts = await web3.eth.getAccounts();
             await factory.methods.createCampaign(this.state.minimumContribution)
             .send({ from: accounts[0] });
+            Router.pushRoute('/');
         } catch (err) {
             this.setState({ errorMessage: err.message });
         }
+        this.setState({ loading: false });
     };
 
     render() {
@@ -40,7 +44,7 @@ class CampaignNew extends Component {
                     </Form.Field>
 
                     <Message error header='Could not process your submission' content={this.state.errorMessage} />
-                    <Button floated='right' style={{ marginTop: '20px' }} secondary>Create Campaign</Button>
+                    <Button loading={this.state.loading} floated='right' style={{ marginTop: '20px' }} secondary>Create Campaign</Button>
                 
                 </Form>
 
